@@ -1,18 +1,12 @@
 from pathlib import Path
+from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-4x7!q9$1p0u#f3ahc@l3g8r_+kz&b^1w2q$7m!e3@p8v%z0"
-
-
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
-
-# -------------------------
-# INSTALLED APPS
-# -------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -21,20 +15,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Third party
     'rest_framework',
     'corsheaders',
-
-    # Local app
     'events',
 ]
 
-
-# -------------------------
-# MIDDLEWARE
-# -------------------------
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',      # MUST BE FIRST
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -43,7 +30,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -65,10 +51,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
-# -------------------------
-# DATABASE
-# -------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -76,63 +58,27 @@ DATABASES = {
     }
 }
 
-
-# -------------------------
-# PASSWORD VALIDATION
-# -------------------------
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-
-# -------------------------
-# INTERNATIONALIZATION
-# -------------------------
+AUTH_PASSWORD_VALIDATORS = []
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-# -------------------------
-# STATIC FILES
-# -------------------------
 STATIC_URL = 'static/'
-
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-# -------------------------
-# CORS SETTINGS
-# -------------------------
 CORS_ALLOW_ALL_ORIGINS = True
-# OR specific frontend:
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-#     "http://127.0.0.1:5173"
-# ]
 
-
-# -------------------------
-# REST FRAMEWORK
-# -------------------------
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ]
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
